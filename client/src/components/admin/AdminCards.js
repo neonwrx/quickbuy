@@ -35,14 +35,14 @@ class AdminCards extends Component {
     if (loading) {
       return (
         <tr>
-          <td colSpan="8">
+          <td colSpan="9">
             <Spinner color="dark" />
           </td>
         </tr>
       )
     }
     return items.map((item, index) => {
-      const { id, name, partner, descr, category, images, _id } = item;
+      const { id, name, partner, descr, category, images, productId, _id } = item;
       return (
         <tr key={index}>
           <td>
@@ -66,6 +66,7 @@ class AdminCards extends Component {
           <td>{category}</td>
           <td><img src={(images.length) ? images[0].src : noimage} className="admin-table__image" alt="quickbuy.shop" /></td>
           <td><div className="admin-table__descr">{descr}</div></td>
+          <td className="admin-table__product-id">{productId}</td>
           <td>{partner}</td>
         </tr>
       )
@@ -85,6 +86,7 @@ class AdminCards extends Component {
               <th>Category</th>
               <th>Img</th>
               <th>Description</th>
+              <th>Product ID</th>
               <th>Partner</th>
             </tr>
           </thead>

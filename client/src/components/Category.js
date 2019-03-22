@@ -19,8 +19,6 @@ class Category extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    // console.log('props', props.match.params.id);
-    // console.log('state', state.id);
     if (state.category !== props.match.params.id) {
       return { category: props.match.params.id };
     }
@@ -112,7 +110,6 @@ class Category extends Component {
 function mapStateToProps({ dataReducer }) {
   return {
     data: dataReducer
-    // id: ownProps.match.params.id
   };
 }
 

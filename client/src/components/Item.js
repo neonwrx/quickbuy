@@ -24,14 +24,7 @@ class Item extends Component {
         <Categories />
         <Product item={item} />
         <div className="rules container">
-          Returns & Refund is a guarantee provided by sellers for every product
-          they sell on AliExpress.com. <br />
-          When you receive a product that was bought and paid for on our site,
-          and you find it is not as described or is of low quality, you can
-          contact the seller to resolve these problems (according to the
-          seller's set of returns guarantees).You will then be able to request a
-          full refund and return the item, or keep the item and agree a partial
-          refund with seller.
+          {item ? item.descr2 : null}
         </div>
         <div className="container mb-3">РЕКОМЕНДУЕМЫЕ ТОВАРЫ</div>
         <Cards items={items} />

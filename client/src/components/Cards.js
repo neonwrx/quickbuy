@@ -14,7 +14,7 @@ class Cards extends Component {
       );
     }
     return (
-      <div className="cards container d-flex align-items-start justify-content-start flex-wrap">
+      <div className="cards container d-flex align-items-start justify-content-between flex-wrap">
         {items.map((item, index) => {
           return <Card item={item} key={index} />;
         })}

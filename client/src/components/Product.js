@@ -2,13 +2,21 @@ import React, { Component } from "react";
 import ImgsViewer from "react-images-viewer";
 import { Spinner } from "reactstrap";
 
+import Popup from "./Popup"
 import noimage from "../img/icon-no-image.svg";
 
 class Product extends Component {
   state = {
     currImg: 0,
-    viewerIsOpen: false
-  };
+    viewerIsOpen: false,
+    modal: false
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
 
   showGallery() {
     this.setState({
@@ -45,8 +53,11 @@ class Product extends Component {
     });
   }
 
-  onPress() {
-    alert("Ok");
+  onPress(id) {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+    alert(id);
   }
 
   render() {
@@ -57,7 +68,8 @@ class Product extends Component {
         </div>
       );
     } else {
-      const { name, descr, price, images } = this.props.item;
+      const { name, descr, price, images, productId } = this.props.item;
+      const { modal } = this.state;
       return (
         <div className="product container d-flex align-items-start justify-content-between flex-wrap">
           <div className="product__images" onClick={() => this.showGallery()}>
@@ -91,12 +103,10 @@ class Product extends Component {
           <div className="product__r-side">
             <div className="product__name">{name}</div>
             <div className="product__descr">{descr}</div>
-            <div className="product__price">{price} грн</div>
+            <div className="product__price">{price} ₽</div>
             <button
               className="product__button"
-              onClick={() => {
-                this.onPress();
-              }}
+              onClick={() => this.toggle()}
             >
               КУПИТЬ
             </button>
@@ -113,6 +123,7 @@ class Product extends Component {
             showThumbnails={true}
             onClickThumbnail={index => this.gotoImg(index)}
           />
+          <Popup id={productId} modal={modal} toggle={() => this.toggle()} />
         </div>
       );
     }

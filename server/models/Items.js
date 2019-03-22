@@ -20,6 +20,10 @@ const ItemSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  descr2: {
+    type: String,
+    default: ''
+  },
   images: [
     {
       src: {
@@ -35,6 +39,10 @@ const ItemSchema = new mongoose.Schema({
   sale: {
     type: Boolean,
     default: false
+  },
+  productId: {
+    type: String,
+    default: ''
   },
   added: {
     type: Date,

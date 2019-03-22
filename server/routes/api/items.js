@@ -32,7 +32,6 @@ module.exports = (app) => {
       }
 
       Items.find(searchQuery, (err, items) => {
-      // Items.find({name: {$regex: ".*"}}, (err, items) => {
         if (err) {
           console.log(err);
           return res.send({
@@ -59,14 +58,14 @@ module.exports = (app) => {
       partner,
       price,
       descr,
+      descr2,
       images,
       category,
+      productId,
       sale
     } = data;
 
-    console.log('data', data);
-
-    if (authorization.startsWith("Bearer ")){
+    if (authorization.startsWith("Bearer ")) {
        token = authorization.substring(7, authorization.length);
 
        if (!prodName || !price || !category) {
@@ -86,15 +85,16 @@ module.exports = (app) => {
          }
          const id = items.length + 1;
          const newItem = new Items();
-         console.log('images', images);
 
          newItem.id = id;
          newItem.name = prodName;
          newItem.partner = partner;
          newItem.price = price;
          newItem.descr = descr;
+         newItem.descr2 = descr2;
          newItem.images = images;
          newItem.category = category;
+         newItem.productId = productId;
          newItem.sale = sale;
          newItem.save((err, item) => {
            if (err) {
@@ -103,7 +103,6 @@ module.exports = (app) => {
                message: 'Error: Server error 2'
              });
            }
-           console.log('item', item);
            return res.send({
              success: true,
              item: item,
@@ -124,48 +123,31 @@ module.exports = (app) => {
     const { headers, body } = req;
     const { authorization } = headers;
     const { data, uId } = body;
-    console.log('data', data);
-    console.log('uId', uId);
-    // const {
-      //   prodName,
-      //   price,
-      //   descr,
-      //   images,
-      //   category,
-      //   sale
-      // } = data;
 
-      if (authorization.startsWith("Bearer ")){
-        token = authorization.substring(7, authorization.length);
+    if (authorization.startsWith("Bearer ")) {
+      token = authorization.substring(7, authorization.length);
 
-        // if (!prodName || !price || !category) {
-          //   return res.send({
-            //     success: false,
-            //     message: 'Error: Fields are cannot be blank.'
-            //   });
-            // }
-
-            Items.findOneAndUpdate({_id: uId}, data, null, (err) => {
-              if (err) {
-                console.log(err);
-                return res.send({
-                  success: false,
-                  message: 'Error: Server error 1'
-                });
-              }
-              return res.send({
-                success: true,
-                message: 'Updete success'
-              });
-            });
-          } else {
-            return res.send({
-              success: false,
-              message: 'Error: Authentification failed.'
-            });
-            //Error
-          }
+      Items.findOneAndUpdate({_id: uId}, data, null, (err) => {
+        if (err) {
+          console.log(err);
+          return res.send({
+            success: false,
+            message: 'Error: Server error 1'
+          });
+        }
+        return res.send({
+          success: true,
+          message: 'Updete success'
         });
+      });
+    } else {
+      return res.send({
+        success: false,
+        message: 'Error: Authentification failed.'
+      });
+      //Error
+    }
+  });
 
   app.delete('/items/delete', (req, res, next) => {
 
@@ -173,7 +155,7 @@ module.exports = (app) => {
     const { authorization } = headers;
     const { uId } = query;
 
-    if (authorization.startsWith("Bearer ")){
+    if (authorization.startsWith("Bearer ")) {
        token = authorization.substring(7, authorization.length);
 
        if (!uId) {

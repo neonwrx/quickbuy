@@ -5,7 +5,7 @@
   "author": "Anton Kovtun",
   "private": true,
   "scripts": {
-    "start": "node server",
+    "start": "nodemon server",
     "client-install": "npm install --prefix client",
     "dev": "concurrently \"npm run start\" \"npm run client\"",
     "client": "npm start --prefix client",

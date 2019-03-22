@@ -45,7 +45,10 @@ class NavBar extends Component {
   render() {
     return (
       <div className="nav-bar">
-        <div className="container d-flex align-items-center justify-content-start flex-wrap">
+        <div className="container d-flex align-items-center justify-content-between flex-wrap">
+          <div className="sort-block d-flex align-items-center justify-content-around flex-wrap">
+            {this.renderSortNames()}
+          </div>
           <div className="search-block">
             <input
               type="text"
@@ -54,9 +57,6 @@ class NavBar extends Component {
                 this.onSearch(e);
               }}
             />
-          </div>
-          <div className="sort-block d-flex align-items-center justify-content-around flex-wrap">
-            {this.renderSortNames()}
           </div>
         </div>
       </div>

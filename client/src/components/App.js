@@ -22,7 +22,6 @@ const App = ({ authenticated, checked }) => (
         <Route path="/category/:id" component={Category} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
-        <Route component={NotFound} />
         <PrivateRoute
           exact
           path="/admin"
@@ -41,6 +40,7 @@ const App = ({ authenticated, checked }) => (
           component={AdminEdit}
           authenticated={authenticated}
         />
+        <Route component={NotFound} />
       </Switch>
     )}
   </BrowserRouter>

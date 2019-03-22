@@ -17,8 +17,10 @@ class AdminEdit extends Component {
     prodName: '',
     partner: '',
     descr: '',
+    descr2: '',
     price: '',
     category: 'electronic',
+    productId: '',
     sale: false,
     images: [],
     showMessage: false,
@@ -29,13 +31,15 @@ class AdminEdit extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     if (this.props.location.state !== undefined) {
-      const { name, partner, descr, price, category, sale, images } = this.props.location.state;
+      const { name, partner, descr, descr2, price, category, productId, sale, images } = this.props.location.state;
       this.setState({
         prodName: name,
         partner,
         descr,
+        descr2,
         price,
         category,
+        productId,
         sale,
         images
       })
@@ -100,7 +104,7 @@ class AdminEdit extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { prodName, partner, descr, price, category, sale, images } = this.state;
+    const { prodName, partner, descr, descr2, price, category, productId, sale, images } = this.state;
     const { state } = this.props.location;
     const { _id } = state;
     let data = {};
@@ -113,11 +117,17 @@ class AdminEdit extends Component {
     if (descr !== state.descr) {
       data = {descr, ...data}
     }
+    if (descr2 !== state.descr2) {
+      data = {descr2, ...data}
+    }
     if (price !== state.price) {
       data = {price, ...data}
     }
     if (category !== state.category) {
       data = {category, ...data}
+    }
+    if (productId !== state.productId) {
+      data = {productId, ...data}
     }
     if (sale !== state.sale) {
       data = {sale, ...data}
@@ -161,7 +171,7 @@ class AdminEdit extends Component {
   }
 
   render() {
-    const { prodName, partner, descr, price, category, sale, errorFetchItems } = this.state;
+    const { prodName, partner, descr, descr2, price, category, productId, sale, errorFetchItems } = this.state;
     if (errorFetchItems) {
       return(
         <div>
@@ -232,6 +242,17 @@ class AdminEdit extends Component {
               />
             </FormGroup>
             <FormGroup>
+              <Label for="descr2">Дополнительное описание</Label>
+              <Input
+                type="textarea"
+                name="descr2"
+                id="descr2"
+                placeholder="Дополнительное описание"
+                value={ descr2 }
+                onChange={ (e) => {this.handleChange(e)} }
+              />
+            </FormGroup>
+            <FormGroup>
               <Label for="category">Категория</Label>
               <Input
                 type="select"
@@ -245,6 +266,17 @@ class AdminEdit extends Component {
                 <option value="children">Детские товары</option>
                 <option value="home">Все для дома</option>
               </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="productId">Product ID</Label>
+              <Input
+                type="text"
+                name="productId"
+                id="productId"
+                placeholder="ID товара"
+                value={ productId }
+                onChange={ (e) => {this.handleChange(e)} }
+              />
             </FormGroup>
             <FormGroup check>
               <Label check>

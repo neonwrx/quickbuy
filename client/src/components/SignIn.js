@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import {
-  Container,
   Col,
   Form,
   FormGroup,
@@ -93,7 +92,7 @@ class SignIn extends Component {
       <div>
         <Header />
         <br />
-        <Container className="Login">
+        <div className="Login">
           <h2>Вход</h2>
           <Form className="form" onSubmit={e => this.submitForm(e)}>
             <Col>
@@ -142,7 +141,7 @@ class SignIn extends Component {
               <Link to={"/signup"}>Регистрация</Link>
             </div>
           </Form>
-        </Container>
+        </div>
       </div>
     );
   }

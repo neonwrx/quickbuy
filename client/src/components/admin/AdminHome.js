@@ -20,7 +20,6 @@ class AdminHome extends Component {
   componentDidMount() {
     // if (!this.props.data.items.length) {
       this.fetchItems();
-      console.log('request');
     // }
   }
 
@@ -66,7 +65,17 @@ class AdminHome extends Component {
 
   render() {
     const { loading, items, pages } = this.props.data;
+    const { rights } = this.props.user;
     const { logout, deleteProduct } = this.props;
+    if (rights !== 'admin') {
+      return (
+        <div>
+          <Header admin={true} logout={logout} />
+          <br/>
+          <div className="container">У вас нет прав для просмора данного контента</div>
+        </div>
+      )
+    }
     return (
       <div>
         <Header admin={true} logout={logout} />
@@ -85,9 +94,10 @@ class AdminHome extends Component {
   }
 }
 
-function mapStateToProps({ dataReducer }) {
+function mapStateToProps(state) {
   return {
-    data: dataReducer
+    data: state.dataReducer,
+    user: state.session.user
   }
 }
 

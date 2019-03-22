@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import logo from "../img/logo.svg";
 import vk from "../img/vk.svg";
@@ -8,9 +9,10 @@ import fb from "../img/fb.svg";
 
 class Header extends Component {
   showLogoutBtn() {
+    const { history } = this.props;
     if (this.props.admin) {
       return (
-        <button className="logout-btn" onClick={() => this.props.logout()}>
+        <button className="logout-btn" onClick={() => this.props.logout(history)}>
         Выйти
         </button>
       );
@@ -44,4 +46,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

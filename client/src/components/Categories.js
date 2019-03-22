@@ -31,7 +31,9 @@ class Categories extends Component {
                   className="categories__item nav-link"
                   to={"/category/sale"}
                   activeStyle={{
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    color: "#5B15CD",
+                    textDecoration: "none"
                   }}
                   >
                     РАСПРОДАЖА
@@ -42,7 +44,9 @@ class Categories extends Component {
                   className="categories__item nav-link"
                   to={"/category/electronic"}
                   activeStyle={{
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    color: "#5B15CD",
+                    textDecoration: "none"
                   }}
                 >
                   ЭЛЕКТРОНИКА
@@ -53,7 +57,9 @@ class Categories extends Component {
                   className="categories__item nav-link"
                   to={"/category/beauty"}
                   activeStyle={{
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    color: "#5B15CD",
+                    textDecoration: "none"
                   }}
                 >
                   КРАСОТА И ЗДОРОВЬЕ
@@ -64,7 +70,9 @@ class Categories extends Component {
                   className="categories__item nav-link"
                   to={"/category/children"}
                   activeStyle={{
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    color: "#5B15CD",
+                    textDecoration: "none"
                   }}
                 >
                   ДЕТСКИЕ ТОВАРЫ
@@ -75,7 +83,9 @@ class Categories extends Component {
                   className="categories__item nav-link"
                   to={"/category/home"}
                   activeStyle={{
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    color: "#5B15CD",
+                    textDecoration: "none"
                   }}
                 >
                   ВСЕ ДЛЯ ДОМА

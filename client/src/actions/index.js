@@ -15,7 +15,7 @@ import {
 } from './types';
 
 const url = 'http://localhost:8080';
-// const url = 'http://192.168.1.105:8080';
+// const url = 'https://quickbuy.store:8443';
 
 export const fetchData = (page, category, orderBy, orderAsc, searchText) => async (dispatch) => {
   dispatch({ type: FETCH_DATA });
@@ -88,7 +88,6 @@ export const deleteProduct = (uId) => async (dispatch) => {
 export const signin = (user, history) => async (dispatch) => {
   await axios.post(`${url}/account/signin`, user)
   .then((res) => {
-    // console.log(res.data);
     if (res.data.success) {
       const { name, rights, token } = res.data;
       const { email } = user;
