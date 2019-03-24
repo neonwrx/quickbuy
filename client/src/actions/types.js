@@ -9,3 +9,4 @@ export const PRODUCT_ERROR = 'PRODUCT_ERROR';
 
 export const SIGN_IN = 'SIGN_IN';
 export const AUTH_FAILED = 'AUTH_FAILED';
+export const DEFINE_LANGUAGE = 'DEFINE_LANGUAGE';

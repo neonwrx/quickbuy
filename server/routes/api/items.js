@@ -57,6 +57,9 @@ module.exports = (app) => {
       prodName,
       partner,
       price,
+      price2,
+      price3,
+      price4,
       descr,
       descr2,
       images,
@@ -90,6 +93,9 @@ module.exports = (app) => {
          newItem.name = prodName;
          newItem.partner = partner;
          newItem.price = price;
+         newItem.price2 = price2;
+         newItem.price3 = price3;
+         newItem.price4 = price4;
          newItem.descr = descr;
          newItem.descr2 = descr2;
          newItem.images = images;

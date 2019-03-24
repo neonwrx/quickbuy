@@ -11,6 +11,7 @@ import {
   Button,
   FormFeedback
 } from "reactstrap";
+import PropTypes from "prop-types";
 
 import Header from "./Header";
 import { signin } from "../actions";
@@ -73,8 +74,8 @@ class SignIn extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { emailState, passwordState } = this.state.validate;
-    const { email, password } = this.state;
+    const { email, password, validate } = this.state;
+    const { emailState, passwordState } = validate;
     const { history } = this.props;
     if (
       emailState.length !== 0 &&
@@ -146,6 +147,11 @@ class SignIn extends Component {
     );
   }
 }
+
+SignIn.propTypes = {
+  user: PropTypes.object,
+  signin: PropTypes.func.isRequired,
+};
 
 function mapStateToProps({ userReducer }) {
   return {

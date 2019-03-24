@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import detectBrowserLanguage from 'detect-browser-language';
 
 import Home from "./Home";
 import SignIn from "./SignIn";
@@ -9,16 +10,16 @@ import NotFound from "./NotFound";
 import Item from "./Item";
 import Category from "./Category";
 import AdminHome from "./admin/AdminHome";
-import AdminNew from "./admin/AdminNew";
 import AdminEdit from "./admin/AdminEdit";
 import PrivateRoute from "./PrivateRoute";
 
+const lang = detectBrowserLanguage();
 const App = ({ authenticated, checked }) => (
   <BrowserRouter>
     {checked && (
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/item/:id" component={Item} />
+        <Route exact path="/" render={(props) => <Home {...props} userLang={lang} /> } />
+        <Route path="/item/:id" render={(props) => <Item {...props} userLang={lang} /> } />
         <Route path="/category/:id" component={Category} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
@@ -31,14 +32,16 @@ const App = ({ authenticated, checked }) => (
         <PrivateRoute
           exact
           path="/admin/new"
-          component={AdminNew}
+          component={AdminEdit}
           authenticated={authenticated}
+          newItem={true}
         />
         <PrivateRoute
           exact
           path="/admin/edit/:id"
           component={AdminEdit}
           authenticated={authenticated}
+          newItem={false}
         />
         <Route component={NotFound} />
       </Switch>
@@ -49,7 +52,7 @@ const App = ({ authenticated, checked }) => (
 function mapStateToProps({ session }) {
   return {
     checked: session.checked,
-    authenticated: session.authenticated
+    authenticated: session.authenticated,
   };
 }
 

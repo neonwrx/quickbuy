@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { sessionService } from 'redux-react-session';
-import * as sessionApi from '../api/sessionApi';
 
 import {
   FETCH_DATA,
@@ -12,10 +11,18 @@ import {
   PRODUCT_ERROR,
   AUTH_FAILED,
   SIGN_IN,
+  DEFINE_LANGUAGE,
 } from './types';
 
 const url = 'http://localhost:8080';
 // const url = 'https://quickbuy.store:8443';
+
+export const defineLang = (lang) => {
+  return {
+    type: DEFINE_LANGUAGE,
+    lang
+  }
+}
 
 export const fetchData = (page, category, orderBy, orderAsc, searchText) => async (dispatch) => {
   dispatch({ type: FETCH_DATA });
@@ -112,7 +119,6 @@ export const signin = (user, history) => async (dispatch) => {
 export const signup = (user, history) => async (dispatch) => {
   await axios.post(`${url}/account/signup`, user)
   .then((res) => {
-    // console.log(res.data);
     if (res.data.success) {
       sessionService.saveSession(res.data.token)
       .then(() => {
@@ -136,12 +142,8 @@ export const signup = (user, history) => async (dispatch) => {
 
 export const logout = (history) => {
   return () => {
-    return sessionApi.logout().then(() => {
-      sessionService.deleteSession();
-      sessionService.deleteUser();
-      history.push('/signin');
-    }).catch(err => {
-      throw (err);
-    });
+    sessionService.deleteSession();
+    sessionService.deleteUser();
+    history.push('/signin');
   };
 };

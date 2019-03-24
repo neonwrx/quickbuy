@@ -5,12 +5,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "detect-browser-language": "^0.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-images-viewer": "^1.6.2",
     "react-input-mask": "^2.0.4",
-    "react-intl": "^2.8.0",
     "react-paginate": "^6.3.0",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",

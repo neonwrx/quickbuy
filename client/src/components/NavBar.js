@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class NavBar extends Component {
   state = {
@@ -63,5 +64,10 @@ class NavBar extends Component {
     );
   }
 }
+
+NavBar.propTypes = {
+  onSort: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired
+};
 
 export default NavBar;

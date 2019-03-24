@@ -16,6 +16,18 @@ const ItemSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  price2: {
+    type: Number,
+    default: 0
+  },
+  price3: {
+    type: Number,
+    default: 0
+  },
+  price4: {
+    type: Number,
+    default: 0
+  },
   descr: {
     type: String,
     default: ''

@@ -5,6 +5,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { sessionService } from 'redux-react-session';
 import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
+import {addLocaleData} from 'react-intl';
+import ru from 'react-intl/locale-data/ru';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -12,6 +14,8 @@ import './App.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import reducers from './reducers';
+
+addLocaleData(ru);
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import InputMask from "react-input-mask";
+import PropTypes from "prop-types";
 
 import logo from "../img/logo.svg";
 import ok from "../img/ok.svg";
@@ -85,6 +86,7 @@ class Popup extends Component {
                 name="telephone"
                 placeholder="Телефон"
                 value={telephone}
+                inputMode="numeric"
                 onChange={e => {
                   this.handleChange(e);
                 }}
@@ -126,11 +128,17 @@ class Popup extends Component {
           width="0"
           height="0"
           border="0"
-          style={{display: 'none'}}
+          style={{ display: "none" }}
         />
       </Modal>
     );
   }
 }
+
+Popup.propTypes = {
+  toggle: PropTypes.func,
+  id: PropTypes.string,
+  modal: PropTypes.bool,
+};
 
 export default Popup;

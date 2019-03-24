@@ -2,13 +2,13 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const PrivateRoute = ({ component, exact = false, path, authenticated }) => (
+const PrivateRoute = ({ component, exact = false, path, authenticated, newItem = false }) => (
   <Route
     exact={exact}
     path={path}
     render={props =>
       authenticated ? (
-        React.createElement(component, props)
+        React.createElement(component, {...props, newItem})
       ) : (
         <Redirect
           to={{
@@ -21,14 +21,13 @@ const PrivateRoute = ({ component, exact = false, path, authenticated }) => (
   />
 );
 
-const { object, bool, string, func } = PropTypes;
-
 PrivateRoute.propTypes = {
-  component: func.isRequired,
-  exact: bool,
-  path: string.isRequired,
-  authenticated: bool.isRequired,
-  location: object
+  component: PropTypes.func.isRequired,
+  exact: PropTypes.bool,
+  path: PropTypes.string.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  location: PropTypes.object,
+  newItem: PropTypes.bool,
 };
 
 export default PrivateRoute;

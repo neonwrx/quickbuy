@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ReactPaginate from "react-paginate";
+import PropTypes from "prop-types";
 
 import Header from "./Header";
 import Categories from "./Categories";
 import NavBar from "./NavBar";
 import Cards from "./Cards";
+import LangPopup from "./LangPopup";
 import Footer from "./Footer";
-import { fetchData } from "../actions";
+import { fetchData, defineLang } from "../actions";
+import { languages } from '../locales';
 
 class Home extends Component {
   state = {
@@ -15,18 +18,33 @@ class Home extends Component {
     category: undefined,
     orderBy: undefined,
     orderAsc: 1,
-    searchText: ""
+    searchText: "",
+    modal: false
   };
 
   componentDidMount() {
-    // if (!this.props.data.items.length) {
+    const { userLang } = this.props;
     this.fetchItems();
-    // }
+    if (!languages.includes(userLang)) {
+      this.toggle();
+    } else {
+      this.defineLang(userLang);
+    }
   }
 
   fetchItems() {
     const { page, category, orderBy, orderAsc, searchText } = this.state;
     this.props.fetchData(page, category, orderBy, orderAsc, searchText);
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
+
+  defineLang(lang) {
+    this.props.defineLang(lang);
   }
 
   onSearch(e) {
@@ -77,7 +95,9 @@ class Home extends Component {
   }
 
   render() {
-    const { loading, items, pages } = this.props.data;
+    const { lang, data } = this.props;
+    const { loading, items, pages } = data;
+    const { modal } = this.state;
     return (
       <div>
         <Header />
@@ -86,7 +106,12 @@ class Home extends Component {
           onSort={(a, b) => this.onSort(a, b)}
         />
         <Categories />
-        <Cards items={items} loading={loading} />
+        <Cards items={items} loading={loading} lang={lang} />
+        <LangPopup
+          modal={modal}
+          toggle={() => this.toggle()}
+          defineLang={lang => this.defineLang(lang)}
+        />
         {this.renderPagination(pages)}
         <Footer />
       </div>
@@ -94,13 +119,22 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({ dataReducer }) {
+Home.propTypes = {
+  userLang: PropTypes.string,
+  lang: PropTypes.string,
+  fetchData: PropTypes.func.isRequired,
+  defineLang: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+};
+
+function mapStateToProps({ dataReducer, langReducer }) {
   return {
-    data: dataReducer
+    data: dataReducer,
+    lang: langReducer.lang,
   };
 }
 
 export default connect(
   mapStateToProps,
-  { fetchData }
+  { fetchData, defineLang }
 )(Home);

@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import ReactPaginate from 'react-paginate';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import PropTypes from "prop-types";
 
-import Header from '../Header';
-import AdminCards from './AdminCards';
-import Footer from '../Footer';
-import { Link } from 'react-router-dom';
-import { fetchData, logout, deleteProduct } from '../../actions';
+import Header from "../Header";
+import AdminCards from "./AdminCards";
+import Footer from "../Footer";
+import { fetchData, logout, deleteProduct } from "../../actions";
 
 class AdminHome extends Component {
   state = {
@@ -14,12 +15,12 @@ class AdminHome extends Component {
     category: undefined,
     orderBy: undefined,
     orderAsc: 1,
-    searchText: ''
-  }
+    searchText: ""
+  };
 
   componentDidMount() {
     // if (!this.props.data.items.length) {
-      this.fetchItems();
+    this.fetchItems();
     // }
   }
 
@@ -30,9 +31,9 @@ class AdminHome extends Component {
 
   handlePageClick(data) {
     let selected = data.selected + 1;
-    this.setState({page: selected}, () => {
-      this.fetchItems()
-    })
+    this.setState({ page: selected }, () => {
+      this.fetchItems();
+    });
   }
 
   renderPagination(pages) {
@@ -40,65 +41,82 @@ class AdminHome extends Component {
       return (
         <nav aria-label="Page navigation example">
           <ReactPaginate
-            previousLabel={'<'}
-            nextLabel={'>'}
-            breakLabel={'...'}
-            breakClassName={'break-me'}
-            pageCount={Number((pages/16).toFixed())}
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={Number((pages / 16).toFixed())}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
-            onPageChange={(data) => this.handlePageClick(data)}
-            containerClassName={'pagination justify-content-center'}
-            pageClassName={'page-item'}
-            pageLinkClassName={'page-link'}
-            previousClassName={'page-item noselect'}
-            nextClassName={'page-item noselect'}
-            previousLinkClassName={'page-link'}
-            nextLinkClassName={'page-link'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
+            onPageChange={data => this.handlePageClick(data)}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item noselect"}
+            nextClassName={"page-item noselect"}
+            previousLinkClassName={"page-link"}
+            nextLinkClassName={"page-link"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
           />
         </nav>
-      )
+      );
     }
   }
 
   render() {
-    const { loading, items, pages } = this.props.data;
-    const { rights } = this.props.user;
-    const { logout, deleteProduct } = this.props;
-    if (rights !== 'admin') {
+    const { logout, deleteProduct, user, data } = this.props;
+    const { loading, items, pages } = data;
+    const { rights } = user;
+    if (rights !== "admin") {
       return (
         <div>
           <Header admin={true} logout={logout} />
-          <br/>
-          <div className="container">У вас нет прав для просмора данного контента</div>
+          <br />
+          <div className="container">
+            У вас нет прав для просмотра данного контента
+          </div>
         </div>
-      )
+      );
     }
     return (
       <div>
         <Header admin={true} logout={logout} />
-        <br/>
+        <br />
         <div className="container">
-          <Link className="" to={'/admin/new'}>Добавить</Link>
+          <Link className="" to={"/admin/new"}>
+            Добавить
+          </Link>
         </div>
-        <br/>
-        <AdminCards items={items} deleteProduct={deleteProduct} loading={loading} />
-        {
-          this.renderPagination(pages)
-        }
+        <br />
+        <AdminCards
+          items={items}
+          deleteProduct={deleteProduct}
+          loading={loading}
+        />
+        {this.renderPagination(pages)}
         <Footer />
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps(state) {
+AdminHome.propTypes = {
+  fetchData: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  data: PropTypes.object.isRequired
+};
+
+function mapStateToProps({ dataReducer, session }) {
   return {
-    data: state.dataReducer,
-    user: state.session.user
-  }
+    data: dataReducer,
+    user: session.user
+  };
 }
 
-export default connect(mapStateToProps, { fetchData, logout, deleteProduct })(AdminHome);
+export default connect(
+  mapStateToProps,
+  { fetchData, logout, deleteProduct }
+)(AdminHome);

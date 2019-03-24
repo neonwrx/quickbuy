@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Spinner, Table, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
 
 import noimage from '../../img/icon-no-image.svg';
 import edit from '../../img/edit-button.svg';
@@ -110,5 +111,11 @@ class AdminCards extends Component {
     )
   }
 }
+
+AdminCards.propTypes = {
+  loading: PropTypes.bool,
+  items: PropTypes.array,
+  deleteProduct: PropTypes.func.isRequired,
+};
 
 export default AdminCards;

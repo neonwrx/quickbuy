@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ReactPaginate from "react-paginate";
+import PropTypes from "prop-types";
 
 import Header from "./Header";
 import Categories from "./Categories";
@@ -106,6 +107,11 @@ class Category extends Component {
     );
   }
 }
+
+Category.propTypes = {
+  fetchData: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+};
 
 function mapStateToProps({ dataReducer }) {
   return {

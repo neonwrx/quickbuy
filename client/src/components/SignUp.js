@@ -11,6 +11,7 @@ import {
   Button,
   FormFeedback
 } from "reactstrap";
+import PropTypes from "prop-types";
 
 import Header from "./Header";
 import { signup } from "../actions";
@@ -74,8 +75,8 @@ class SignUp extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { emailState, passwordState } = this.state.validate;
-    const { email, password, userName } = this.state;
+    const { email, password, userName, validate } = this.state;
+    const { emailState, passwordState } = validate;
     const name = userName;
     const { history } = this.props;
     if (
@@ -153,7 +154,7 @@ class SignUp extends Component {
             {this.renderError()}
             <div className="d-flex justify-content-between align-items-end">
               <Button className="register-btn mr-2">Регистрация</Button>
-              <Link to={"/signin"}>Вернуться на страницу входа</Link>
+              <Link to={"/signin"}>Вернуться</Link>
             </div>
           </Form>
         </div>
@@ -161,6 +162,11 @@ class SignUp extends Component {
     );
   }
 }
+
+SignUp.propTypes = {
+  user: PropTypes.object,
+  signup: PropTypes.func.isRequired,
+};
 
 function mapStateToProps({ userReducer }) {
   return {

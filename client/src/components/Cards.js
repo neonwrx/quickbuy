@@ -1,26 +1,30 @@
-import React, { Component } from "react";
+import React from "react";
 import { Spinner } from "reactstrap";
+import PropTypes from "prop-types";
 
 import Card from "./Card";
 
-class Cards extends Component {
-  render() {
-    const { loading, items } = this.props;
-    if (loading) {
-      return (
-        <div className="cards container d-flex align-items-start justify-content-center flex-wrap">
-          <Spinner color="dark" />
-        </div>
-      );
-    }
+const Cards = ({loading, items, lang}) => {
+  if (loading) {
     return (
-      <div className="cards container d-flex align-items-start justify-content-between flex-wrap">
-        {items.map((item, index) => {
-          return <Card item={item} key={index} />;
-        })}
+      <div className="cards container d-flex align-items-start justify-content-center flex-wrap">
+        <Spinner color="dark" />
       </div>
     );
   }
+  return (
+    <div className="cards container d-flex align-items-start justify-content-start flex-wrap">
+      {items.map((item, index) => {
+        return <Card item={item} lang={lang} key={index} />;
+      })}
+    </div>
+  );
 }
+
+Cards.propTypes = {
+  loading: PropTypes.bool,
+  items: PropTypes.array,
+  lang: PropTypes.string,
+};
 
 export default Cards;
