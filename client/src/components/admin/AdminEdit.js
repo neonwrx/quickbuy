@@ -76,7 +76,7 @@ class AdminEdit extends Component {
       [name]: value,
       showMessage: false
     });
-  };
+  }
 
   async handleFileChange(event) {
     const BASE_URL = "https://api.cloudinary.com/v1_1/quickbuy/image/upload";

@@ -8,7 +8,8 @@ import Categories from "./Categories";
 import NavBar from "./NavBar";
 import Cards from "./Cards";
 import Footer from "./Footer";
-import { fetchData } from "../actions";
+import { fetchData, defineLang } from "../actions";
+import { languages } from "../locales";
 
 class Category extends Component {
   state = {
@@ -27,15 +28,25 @@ class Category extends Component {
   }
 
   componentDidMount() {
+    const { userLang, lang } = this.props;
     // if (!this.props.data.items.length) {
     this.fetchItems();
     // }
+    if (!languages.includes(userLang) && !lang.length) {
+      this.toggle();
+    } else if (lang === "") {
+      this.defineLang(userLang);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.category !== prevState.category) {
       this.fetchItems();
     }
+  }
+
+  defineLang(lang) {
+    this.props.defineLang(lang);
   }
 
   fetchItems() {
@@ -91,7 +102,8 @@ class Category extends Component {
   }
 
   render() {
-    const { loading, items, pages } = this.props.data;
+    const { data, lang } = this.props;
+    const { loading, items, pages } = data;
     return (
       <div>
         <Header />
@@ -100,7 +112,7 @@ class Category extends Component {
           onSort={(a, b) => this.onSort(a, b)}
         />
         <Categories />
-        <Cards items={items} loading={loading} />
+        <Cards items={items} loading={loading} lang={lang} />
         {this.renderPagination(pages)}
         <Footer />
       </div>
@@ -109,17 +121,21 @@ class Category extends Component {
 }
 
 Category.propTypes = {
+  userLang: PropTypes.string,
   fetchData: PropTypes.func.isRequired,
+  defineLang: PropTypes.func.isRequired,
+  lang: PropTypes.string,
   data: PropTypes.object.isRequired,
 };
 
-function mapStateToProps({ dataReducer }) {
+function mapStateToProps({ dataReducer, langReducer }) {
   return {
-    data: dataReducer
+    data: dataReducer,
+    lang: langReducer.lang
   };
 }
 
 export default connect(
   mapStateToProps,
-  { fetchData }
+  { fetchData, defineLang }
 )(Category);

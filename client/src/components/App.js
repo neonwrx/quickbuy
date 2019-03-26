@@ -12,15 +12,20 @@ import Category from "./Category";
 import AdminHome from "./admin/AdminHome";
 import AdminEdit from "./admin/AdminEdit";
 import PrivateRoute from "./PrivateRoute";
+import PrivacyPolicy from "./PrivacyPolicy";
+import Agreement from "./Agreement";
 
 const lang = detectBrowserLanguage();
+// const lang = 'ru-RU';
 const App = ({ authenticated, checked }) => (
   <BrowserRouter>
     {checked && (
       <Switch>
         <Route exact path="/" render={(props) => <Home {...props} userLang={lang} /> } />
         <Route path="/item/:id" render={(props) => <Item {...props} userLang={lang} /> } />
-        <Route path="/category/:id" component={Category} />
+        <Route path="/category/:id" render={(props) => <Category {...props} userLang={lang} /> } />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
+        <Route path="/agreement" component={Agreement} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <PrivateRoute

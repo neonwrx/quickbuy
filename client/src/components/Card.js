@@ -24,45 +24,54 @@ class Card extends Component {
     }));
   }
 
-  renderPrice(price, price2, price3, price4) {
+  renderPrice(price, price2, price3, price4, sale) {
     const { lang } = this.props;
     switch (lang) {
       case languages[0]:
         return (
           <>
             {" "}
-            {price} {currencies[0]}{" "}
+            {(sale) ? this.salePrice(price,currencies[0]) : price} {currencies[0]}{" "}
           </>
         );
       case languages[1]:
         return (
           <>
             {" "}
-            {price2} {currencies[1]}{" "}
+            {(sale) ? this.salePrice(price2,currencies[1]) : price2} {currencies[1]}{" "}
           </>
         );
       case languages[2]:
         return (
           <>
             {" "}
-            {price3} {currencies[2]}{" "}
+            {(sale) ? this.salePrice(price3,currencies[2]) : price3} {currencies[2]}{" "}
           </>
         );
       case languages[3]:
         return (
           <>
             {" "}
-            {price4} {currencies[3]}{" "}
+            {(sale) ? this.salePrice(price4,currencies[3]) : price4} {currencies[3]}{" "}
           </>
         );
       default:
         return (
           <>
             {" "}
-            {price} {currencies[0]}{" "}
+            {(sale) ? this.salePrice(price,currencies[0]) : price} {currencies[0]}{" "}
           </>
         );
     }
+  }
+
+  salePrice(price,currency) {
+    return(
+      <>
+        <span className="sale-price">{price+price*.20} {currency}</span>
+        {price}
+      </>
+    )
   }
 
   render() {
@@ -74,12 +83,13 @@ class Card extends Component {
       price4,
       id,
       images,
-      productId
+      productId,
+      sale
     } = this.props.item;
     const { modal } = this.state;
     return (
       <div className="col-sm-auto col-md-6 col-lg-4 mb-3">
-        <div className="s-card" onClick={e => this.onPress(e, id)}>
+        <div className={(sale) ? "s-card sale": "s-card"} onClick={e => this.onPress(e, id)}>
           <div className="s-card__image">
             <img
               src={images.length ? images[0].src : noimage}
@@ -92,7 +102,7 @@ class Card extends Component {
               Купить
             </button>
             <div className="s-card__price">
-              {this.renderPrice(price, price2, price3, price4)}
+              {this.renderPrice(price, price2, price3, price4, sale)}
             </div>
           </div>
         </div>

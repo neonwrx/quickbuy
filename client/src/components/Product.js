@@ -55,45 +55,54 @@ class Product extends Component {
     });
   }
 
-  renderPrice(price, price2, price3, price4) {
+  renderPrice(price, price2, price3, price4, sale) {
     const { lang } = this.props;
     switch (lang) {
       case languages[0]:
         return (
           <>
             {" "}
-            {price} {currencies[0]}{" "}
+            {(sale) ? this.salePrice(price,currencies[0]) : price} {currencies[0]}{" "}
           </>
         );
       case languages[1]:
         return (
           <>
             {" "}
-            {price2} {currencies[1]}{" "}
+            {(sale) ? this.salePrice(price2,currencies[1]) : price2} {currencies[1]}{" "}
           </>
         );
       case languages[2]:
         return (
           <>
             {" "}
-            {price3} {currencies[2]}{" "}
+            {(sale) ? this.salePrice(price3,currencies[2]) : price3} {currencies[2]}{" "}
           </>
         );
       case languages[3]:
         return (
           <>
             {" "}
-            {price4} {currencies[3]}{" "}
+            {(sale) ? this.salePrice(price4,currencies[3]) : price4} {currencies[3]}{" "}
           </>
         );
       default:
         return (
           <>
             {" "}
-            {price} {currencies[0]}{" "}
+            {(sale) ? this.salePrice(price,currencies[0]) : price} {currencies[0]}{" "}
           </>
         );
     }
+  }
+
+  salePrice(price,currency) {
+    return(
+      <>
+        <span className="sale-price">{price+price*.20} {currency}</span>
+        {price}
+      </>
+    )
   }
 
   render() {
@@ -104,12 +113,12 @@ class Product extends Component {
         </div>
       );
     } else {
-      const { name, descr, descr2, price, price2, price3, price4, images, productId } = this.props.item;
+      const { name, descr, descr2, price, price2, price3, price4, images, productId, sale } = this.props.item;
       const { modal } = this.state;
       return (
         <>
           <div className="product container d-flex align-items-start justify-content-between flex-wrap">
-            <div className="product__images" onClick={() => this.showGallery()}>
+            <div className={(sale) ? "product__images sale" : "product__images"} onClick={() => this.showGallery()}>
               <div className="product__image d-flex align-items-center justify-content-center">
                 <img
                   src={images[0] !== undefined ? images[0].src : noimage}
@@ -141,7 +150,7 @@ class Product extends Component {
               <div className="product__name">{name}</div>
               <div className="product__descr">{descr}</div>
               <div className="product__price">
-                {this.renderPrice(price, price2, price3, price4)}
+                {this.renderPrice(price, price2, price3, price4, sale)}
               </div>
               <button
                 className="product__button"

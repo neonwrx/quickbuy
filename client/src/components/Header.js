@@ -26,15 +26,15 @@ class Header extends Component {
 
   renderIcons() {
     const names = [
-      "https://instagram.com/",
-      "https://facebook.com/",
-      "https://vk.com/"
+      "https://www.instagram.com/quickbuy.store/",
+      "https://www.facebook.com/groups/quickbuy.store/",
+      "https://vk.com/quickbuy_shop"
     ];
     const images = [insta, fb, vk];
     return names.map((name, index) => {
       return (
         <a href={names[index]} className="social__icon" key={index}>
-          <img src={images[index]} alt={names[index]} />
+          <img src={images[index]} alt="social" />
         </a>
       );
     });

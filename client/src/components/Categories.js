@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
+import PropTypes from "prop-types";
 
 class Categories extends Component {
   state = {
@@ -14,6 +15,7 @@ class Categories extends Component {
   }
 
   renderCategories() {
+    const { active } = this.props;
     const categories = [
       "РАСПРОДАЖА",
       "ЭЛЕКТРОНИКА",
@@ -26,7 +28,11 @@ class Categories extends Component {
       return (
         <NavItem key={index}>
           <NavLink
-            className="categories__item nav-link"
+            className={
+              active === links[index]
+                ? "categories__item nav-link active"
+                : "categories__item nav-link"
+            }
             to={`/category/${links[index]}`}
             activeStyle={{
               fontWeight: "bold",
@@ -62,5 +68,13 @@ class Categories extends Component {
     );
   }
 }
+
+Categories.defaultProps = {
+  active: ""
+};
+
+Categories.propTypes = {
+  active: PropTypes.string
+};
 
 export default Categories;

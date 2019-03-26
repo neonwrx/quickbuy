@@ -14,8 +14,8 @@ import {
   DEFINE_LANGUAGE,
 } from './types';
 
-const url = 'http://localhost:8080';
-// const url = 'https://quickbuy.store:8443';
+// const url = 'http://localhost:8080';
+const url = 'https://quickbuy.store:8443';
 
 export const defineLang = (lang) => {
   return {
@@ -23,6 +23,16 @@ export const defineLang = (lang) => {
     lang
   }
 }
+
+// export const defineLang = (lang) => async (dispatch) => {
+//   await sessionService.loadUser()
+//   .then( async (user) => {
+//     user.lang = lang;
+//     await sessionService.saveUser(user)}
+//   )
+//   .catch(err => console.error(err));
+//   dispatch({type: DEFINE_LANGUAGE,lang});
+// }
 
 export const fetchData = (page, category, orderBy, orderAsc, searchText) => async (dispatch) => {
   dispatch({ type: FETCH_DATA });

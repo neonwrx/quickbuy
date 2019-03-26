@@ -23,9 +23,9 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    const { userLang } = this.props;
+    const { userLang, lang } = this.props;
     this.fetchItems();
-    if (!languages.includes(userLang)) {
+    if (!languages.includes(userLang) && !lang.length) {
       this.toggle();
     } else {
       this.defineLang(userLang);

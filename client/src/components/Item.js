@@ -22,7 +22,7 @@ class Item extends Component {
     if (!this.props.items.length) {
       this.props.fetchData(1);
     }
-    if (!languages.includes(userLang)) {
+    if (!languages.includes(userLang) && !lang.length) {
       this.toggle();
     } else if (lang === "") {
       this.defineLang(userLang);
@@ -41,11 +41,12 @@ class Item extends Component {
 
   render() {
     const { item, items, lang } = this.props;
+    const { category } = item;
     const { modal } = this.state;
     return (
       <div>
         <Header />
-        <Categories />
+        <Categories active={category} />
         <Product item={item} lang={lang} />
         <div className="container mb-3">РЕКОМЕНДУЕМЫЕ ТОВАРЫ</div>
         <Cards items={items} />
